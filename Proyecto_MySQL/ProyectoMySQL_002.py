@@ -9,7 +9,7 @@
 from multiprocessing import connection
 import LibConexiones
 import LibDBScripts
-import LibDBScriptsMatricula
+import QuerysMatricula
 import LibDBManager2
 from colorama import Fore
 from colorama import Style
@@ -27,16 +27,16 @@ try :
 except :    
     print(f"{Fore.RED}{Style.BRIGHT}...ERROR en ProyectoMySQL_002.py ...{Style.RESET_ALL}")
 
-resultado = LibDBManager2.Leer(LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.leer_TABLA_INSTITUCIONAL)
+#resultado = LibDBManager2.Leer(LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.leer_TABLA_INSTITUCIONAL)
 
 #LibDBManager2.VerificarTabla(LibConexiones.dbejemplo , "tabla_institucional")
 
-LibDBManager2.EjecutarScript(LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.drop_TABLA_INSTITUCIONAL_POR_CURSO_SiExiste)
-LibDBManager2.EjecutarScript(LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.crear_TABLA_INSTITUCIONAL_POR_CURSO)
-#resultadoConsulta_TABLA_INSTITUCIONAL_POR_CURSO_GEM = LibDBManager2.Leer(LibConexiones.gem , cursorGEM , LibDBScriptsMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO)
+#LibDBManager2.EjecutarScript(LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.drop_TABLA_INSTITUCIONAL_POR_CURSO_SiExiste)
+#LibDBManager2.EjecutarScript(LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.crear_TABLA_INSTITUCIONAL_POR_CURSO)
+resultadoConsulta_TABLA_INSTITUCIONAL_POR_CURSO_GEM = LibDBManager2.Leer(LibConexiones.gem , cursorGEM , QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO)
 #LibDBManager2.InsertarDatos(LibConexiones.dbejemplo , cursorDBEjemplo , resultadoConsulta_TABLA_INSTITUCIONAL_POR_CURSO_GEM , LibDBScriptsMatricula.insertar_TABLA_INSTITUCIONAL_POR_CURSO)
-LibDBManager2.LeerYGuardar(LibConexiones.gem , cursorGEM , LibDBScriptsMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO , LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.insertar_TABLA_INSTITUCIONAL_POR_CURSO)
-
+#LibDBManager2.LeerYGuardar(LibConexiones.gem , cursorGEM , LibDBScriptsMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO , LibConexiones.dbejemplo , cursorDBEjemplo , LibDBScriptsMatricula.insertar_TABLA_INSTITUCIONAL_POR_CURSO)
+LibDBManager2.Leer(LibConexiones.gem , cursorGEM , QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO)
 
 #for x in resultadoConsulta_TABLA_INSTITUCIONAL_POR_CURSO_GEM:
 #    print(x)

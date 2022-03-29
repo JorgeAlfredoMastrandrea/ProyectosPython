@@ -130,9 +130,20 @@ def GuardarConsultaEnBD(db , cursor , scriptSelect):
     return True
 
 def EjecutarScript(db , cursor , queryParajecutar):
-    print(f"...ejecutando un script en la base {db.database}")
-    cursor.execute(queryParajecutar)
-    db.commit()
+    verifyOK = False
+    resultado = ""
+    try:
+        print(f"...ejecutando un script en la base {db.database}")
+        resultado = cursor.execute(queryParajecutar)
+        db.commit()
+    except:
+        print(f"...script no ejecutado, revisar..!!")
+        verifyOK = False
+    else:
+        print("...script ejecutado existosamente..!")
+        verifyOK = True
+    return resultado , verifyOK
+
     
 def InsertarDatos(db , cursor , resultado , scriptInsert):
     print("...ejecutando script INSERT contra : ", db.database)
@@ -140,23 +151,32 @@ def InsertarDatos(db , cursor , resultado , scriptInsert):
     db.commit()
 ##############################################################################################
 def Leer(db , cursor , scriptSelect):
-    print(f"{Fore.BLUE}{Style.BRIGHT}...ejecutando script SELECT contra : {db.database} ...{Style.RESET_ALL}")
-    cursor.execute(scriptSelect)
-    resultado = cursor.fetchall()
-    #db.close()
+    try:
+        print(f"{Fore.BLUE}{Style.BRIGHT}...leyendo datos de la base : {db.database} ...{Style.RESET_ALL}")    
+        cursor.execute(scriptSelect)
+        resultado = cursor.fetchall()
+        #db.close()
+    except:
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> Leer(db , cursor , scriptSelect)) no se pudo ejecutar el script...{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
     return resultado
+
 def LeerYGuardar(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
     # hago la consulta al gem
     resultado = Leer(dbGEM , cursorGEM , scriptSelectGEM)
     # guardo el resultado en la base local
     InsertarDatos(dbLocal , cursorLocal , resultado , scriptInsertar)
     return True
+
 def BorrarTabla(db , cursor , tabla):
     print(f"{Fore.BLUE}{Style.BRIGHT}...borrando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
     return True
+
 def CrearTabla(db , cursor , scriptCrear):
     print(f"{Fore.BLUE}{Style.BRIGHT}...creando tabla : en {db.database} ...{Style.RESET_ALL}")
     return True
+
 def EliminarTabla(db , cursor , tabla):
     print(f"{Fore.BLUE}{Style.BRIGHT}...eliminando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
     return True

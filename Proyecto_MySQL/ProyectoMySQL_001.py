@@ -10,7 +10,7 @@ from multiprocessing import connection
 import LibDBManager
 import LibConexiones
 import LibDBScripts
-import LibDBScriptsMatricula
+import QuerysMatricula
 import LibDBManager2
 
 #cursorGEM       = LibDBManager2.SetCursor(LibConexiones.gem)
