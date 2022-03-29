@@ -14,6 +14,7 @@ import LibDBManager2
 from colorama import Fore
 from colorama import Style
 
+
 try :
     # verificar base dbejemplo
     cursorDBEjemplo , verifyOk = LibDBManager2.VerificarBD(LibConexiones.dbejemplo)    
