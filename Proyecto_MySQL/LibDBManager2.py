@@ -128,7 +128,7 @@ def GuardarConsultaEnBD(db , cursor , scriptSelect):
     # si la tabla no existe, la creo
     # si la tabla ya existe, guardo los datos
     return True
-
+""" ver si esto sirve 
 def EjecutarScript(db , cursor , queryParajecutar):
     verifyOK = False
     resultado = ""
@@ -143,7 +143,7 @@ def EjecutarScript(db , cursor , queryParajecutar):
         print("...script ejecutado existosamente..!")
         verifyOK = True
     return resultado , verifyOK
-
+"""
     
 def InsertarDatos(db , cursor , resultado , scriptInsert):
     print("...ejecutando script INSERT contra : ", db.database)
@@ -162,12 +162,12 @@ def Leer(db , cursor , scriptSelect):
         print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
     return resultado
 
-def LeerYGuardar(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
+def LeerYGuardarEnLocal(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
     # hago la consulta al gem
     resultado = Leer(dbGEM , cursorGEM , scriptSelectGEM)
     # guardo el resultado en la base local
     InsertarDatos(dbLocal , cursorLocal , resultado , scriptInsertar)
-    return True
+    return resultado
 
 def BorrarTabla(db , cursor , tabla):
     print(f"{Fore.BLUE}{Style.BRIGHT}...borrando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")

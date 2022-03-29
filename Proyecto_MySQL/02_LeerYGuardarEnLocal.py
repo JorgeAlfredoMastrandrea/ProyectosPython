@@ -19,7 +19,4 @@ except :
     print(f"{Fore.RED}{Style.BRIGHT}...ERROR en ProyectoMySQL_002.py ...{Style.RESET_ALL}")
 
 
-resultados = LibDBManager2.Leer(LibConexiones.dbejemplo , cursorDBEjemplo , QuerysMatricula.leer_local_TABLA_INSTITUCIONAL_POR_CURSO)
-
-for registro in resultados:
-    print(registro)
+resultado = LibDBManager2.LeerYGuardarEnLocal(LibConexiones.gem , cursorGEM , QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO , LibConexiones.dbejemplo , cursorDBEjemplo , QuerysMatricula.insertar_TABLA_INSTITUCIONAL_POR_CURSO)

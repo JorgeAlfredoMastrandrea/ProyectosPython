@@ -313,3 +313,7 @@ insertar_TABLA_INSTITUCIONAL_POR_CURSO = """INSERT INTO TABLA_INSTITUCIONAL_POR_
                                 NSNC
                                 ) 
                                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+leer_local_TABLA_INSTITUCIONAL_POR_CURSO = """SELECT * 
+                                   FROM TABLA_INSTITUCIONAL_POR_CURSO  
+                                   """
