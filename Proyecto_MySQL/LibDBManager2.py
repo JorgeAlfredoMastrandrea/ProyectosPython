@@ -147,6 +147,7 @@ def EjecutarScript(db , cursor , queryParajecutar):
     
 def InsertarDatos(db , cursor , resultado , scriptInsert):
     accionExitosa = False
+    resultado= ""
     try:
         print(f"{Fore.BLUE}{Style.BRIGHT}...ejecutando script INSERT contra : {Style.RESET_ALL}", db.database)
         cursor.executemany(scriptInsert, resultado)
@@ -161,6 +162,7 @@ def InsertarDatos(db , cursor , resultado , scriptInsert):
 ##############################################################################################
 def Leer(db , cursor , scriptSelect):
     accionExitosa = False
+    resultado= ""
     try:
         print(f"{Fore.BLUE}{Style.BRIGHT}...leyendo datos de la base : {db.database} ...{Style.RESET_ALL}")    
         cursor.execute(scriptSelect)

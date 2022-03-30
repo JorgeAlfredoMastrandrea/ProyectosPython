@@ -274,17 +274,20 @@ seleccionar_TABLA_INSTITUCIONAL_POR_CURSO = """SELECT
                                    COUNT(DISTINCT CASE WHEN sexo = 'Femenino' THEN Alumno_ID END) AS 'Femeninos',
                                    COUNT(DISTINCT CASE WHEN sexo is null THEN Alumno_ID END) AS 'NSNC'
                                    FROM (
-                                          """ + seleccionar_TABLA_MATRICULA_NOMINAL + """		
+                                       """ + seleccionar_TABLA_MATRICULA_NOMINAL + """		
                                    ) tn
                                    GROUP BY
                                    tn.`Número_Anexo`,
-                                   tn.Curso
+                                   tn.Curso,
+                                   tn.`División`
                                    ORDER BY 
                                    tn.Nivel, 
                                    tn.`Gestión`, 
                                    tn.`Supervisión`,
                                    tn.`Número_Anexo`,
-                                   tn.Curso
+                                   tn.Curso,
+                                   tn.`División`,
+                                   tn.Alumno_ID
                                    """
                                    
 insertar_TABLA_INSTITUCIONAL_POR_CURSO = """INSERT INTO TABLA_INSTITUCIONAL_POR_CURSO 
@@ -317,3 +320,75 @@ insertar_TABLA_INSTITUCIONAL_POR_CURSO = """INSERT INTO TABLA_INSTITUCIONAL_POR_
 leer_local_TABLA_INSTITUCIONAL_POR_CURSO = """SELECT * 
                                    FROM TABLA_INSTITUCIONAL_POR_CURSO  
                                    """
+###############################################################################################################
+###############################################################################################################
+                                   
+crear_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """CREATE TABLE IF NOT EXISTS TABLA_INSTITUCIONAL_POR_CURSO_DIVISION
+                                                 (
+                                                 Nivel VARCHAR(50),
+                                                 Gestión VARCHAR(45),
+                                                 Supervisión VARCHAR(150),
+                                                 Escuela_ID INT(10),
+                                                 CUE INT(7),
+                                                 subcue INT(2),
+                                                 Número_escuela VARCHAR(6),
+                                                 Anexo INT(10),
+                                                 Número_Anexo VARCHAR(10),
+                                                 Nombre_Escuela VARCHAR(120),
+                                                 Departamento VARCHAR(45),
+                                                 Localidad VARCHAR(45),
+                                                 zona VARCHAR(20),
+                                                 AMBITO VARCHAR(60),
+                                                 Regional VARCHAR(45),
+                                                 latitud FLOAT(45),
+                                                 longitud FLOAT(45),
+                                                 Curso VARCHAR(45),                                                 
+                                                 División VARCHAR(45),
+                                                 Matrícula INT(10),
+                                                 Masculinos INT(10),
+                                                 Femeninos INT(10),
+                                                 NSNC INT(10) 
+                                                 )"""
+
+seleccionar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """SELECT
+                                                        tn.Nivel,
+                                                        tn.`Gestión`,
+                                                        tn.`Supervisión`,
+                                                        tn.Escuela_ID,
+                                                        tn.CUE,
+                                                        tn.subcue,
+                                                        tn.`Número_escuela`,
+                                                        tn.Anexo,
+                                                        tn.`Número_Anexo`,
+                                                        tn.Nombre_Escuela,
+                                                        tn.Departamento,
+                                                        tn.Localidad,
+                                                        tn.zona,
+                                                        tn.AMBITO,
+                                                        tn.Regional,
+                                                        tn.latitud,
+                                                        tn.longitud,
+                                                        tn.Curso,
+                                                        tn.`División`,
+                                                        tn.Turno,
+                                                        tn.Modalidad,                                                        
+                                                        COUNT(DISTINCT (tn.Alumno_ID)) AS 'Matrícula',
+                                                        COUNT(DISTINCT CASE WHEN sexo = 'Masculino' THEN Alumno_ID END) AS 'Masculinos',
+                                                        COUNT(DISTINCT CASE WHEN sexo = 'Femenino' THEN Alumno_ID END) AS 'Femeninos',
+                                                        COUNT(DISTINCT CASE WHEN sexo is null THEN Alumno_ID END) AS 'NS/NC'
+                                                        FROM (
+                                                               """ + seleccionar_TABLA_MATRICULA_NOMINAL + """              
+                                                        ) tn
+                                                        GROUP BY
+                                                        tn.`Número_Anexo`,
+                                                        tn.Curso,
+                                                        tn.`División`
+                                                        ORDER BY 
+                                                        tn.Nivel, 
+                                                        tn.`Gestión`,
+                                                        tn.`Supervisión`,
+                                                        tn.`Número_Anexo`,
+                                                        tn.Curso,
+                                                        tn.`División`,
+                                                        tn.Alumno_ID
+                                                        )"""

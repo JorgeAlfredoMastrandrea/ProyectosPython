@@ -21,7 +21,7 @@ except :
 
 resultados = LibDBManager2.Leer(LibConexiones.gem , 
                                 cursorGEM , 
-                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO)
+                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION)
 
 for registro in resultados:
     print(registro)
