@@ -197,8 +197,17 @@ def BorrarTablaLocal(db , cursor , tabla):
     return accionExitosa
 
 def CrearTablaLocal(db , cursor , scriptCrear):
-    print(f"{Fore.BLUE}{Style.BRIGHT}...creando tabla : en {db.database} ...{Style.RESET_ALL}")
-    return True
+    accionExitosa = False
+    try:
+        print(f"{Fore.BLUE}{Style.BRIGHT}...creando tabla : en {db.database} ...{Style.RESET_ALL}")
+        cursor.execute(scriptCrear)
+        db.commit()
+    except:
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> CrearTablaLocal(db , cursor , scriptCrear)) no se pudo crear la tabla en la base {db.database}...{Style.RESET_ALL}")    
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}...tabla creada en la base {db.database}  ...{Style.RESET_ALL}")
+        accionExitosa = True
+    return accionExitosa
 
 def EliminarTablaLocal(db , cursor , tabla):
     accionExitosa = False

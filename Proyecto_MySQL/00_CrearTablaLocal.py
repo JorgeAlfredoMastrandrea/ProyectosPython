@@ -18,10 +18,8 @@ try :
 except :    
     print(f"{Fore.RED}{Style.BRIGHT}...ERROR en ProyectoMySQL_002.py ...{Style.RESET_ALL}")
 
+accionExitosa = LibDBManager2.CrearTablaLocal(LibConexiones.dbejemplo ,
+                                              cursorDBEjemplo ,
+                                              QuerysMatricula.crear_TABLA_INSTITUCIONAL_POR_CURSO)
 
-resultados = LibDBManager2.Leer(LibConexiones.gem , 
-                                cursorGEM , 
-                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO)
-
-for registro in resultados:
-    print(registro)
+print("accion exitosa al crear la tabla  ",accionExitosa)
