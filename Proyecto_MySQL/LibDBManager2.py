@@ -146,11 +146,22 @@ def EjecutarScript(db , cursor , queryParajecutar):
 """
     
 def InsertarDatos(db , cursor , resultado , scriptInsert):
-    print("...ejecutando script INSERT contra : ", db.database)
-    cursor.executemany(scriptInsert, resultado)
-    db.commit()
+    operacionExitosa = False
+    try:
+        print("...ejecutando script INSERT contra : ", db.database)
+        cursor.executemany(scriptInsert, resultado)
+        db.commit()
+    except:
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> InsertarDatos(db , cursor , resultado , scriptInsert)) no se pudo insertar los datos en la base local...{Style.RESET_ALL}")
+        operacionExitosa = False
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}...datos insertados en la base {db.database}  ...{Style.RESET_ALL}")    
+        operacionExitosa = True
+    return operacionExitosa    
+
 ##############################################################################################
 def Leer(db , cursor , scriptSelect):
+    operacionExitosa = False
     try:
         print(f"{Fore.BLUE}{Style.BRIGHT}...leyendo datos de la base : {db.database} ...{Style.RESET_ALL}")    
         cursor.execute(scriptSelect)
@@ -158,9 +169,11 @@ def Leer(db , cursor , scriptSelect):
         #db.close()
     except:
         print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> Leer(db , cursor , scriptSelect)) no se pudo ejecutar el script...{Style.RESET_ALL}")
+        operacionExitosa = False
     else:
         print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
-    return resultado
+        operacionExitosa = True
+    return resultado , operacionExitosa
 
 def LeerYGuardarEnLocal(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
     # hago la consulta al gem
