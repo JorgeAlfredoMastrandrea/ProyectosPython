@@ -146,11 +146,20 @@ def EjecutarScript(db , cursor , queryParajecutar):
 """
     
 def InsertarDatos(db , cursor , resultado , scriptInsert):
-    print("...ejecutando script INSERT contra : ", db.database)
-    cursor.executemany(scriptInsert, resultado)
-    db.commit()
+    accionExitosa = False
+    try:
+        print(f"{Fore.BLUE}{Style.BRIGHT}...ejecutando script INSERT contra : {Style.RESET_ALL}", db.database)
+        cursor.executemany(scriptInsert, resultado)
+        db.commit()
+    except:
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> InsertarDatos(db , cursor , resultado , scriptInsert)) no se pudo insertar los datos en base local...{Style.RESET_ALL}")    
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}...datos insertados en la base {db.database}  ...{Style.RESET_ALL}")    
+        accionExitosa = True
+    return accionExitosa    
 ##############################################################################################
 def Leer(db , cursor , scriptSelect):
+    accionExitosa = False
     try:
         print(f"{Fore.BLUE}{Style.BRIGHT}...leyendo datos de la base : {db.database} ...{Style.RESET_ALL}")    
         cursor.execute(scriptSelect)
@@ -160,25 +169,48 @@ def Leer(db , cursor , scriptSelect):
         print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> Leer(db , cursor , scriptSelect)) no se pudo ejecutar el script...{Style.RESET_ALL}")
     else:
         print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
-    return resultado
+        accionExitosa = True
+    return resultado , accionExitosa
 
 def LeerYGuardarEnLocal(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
     # hago la consulta al gem
     resultado = Leer(dbGEM , cursorGEM , scriptSelectGEM)
-    # guardo el resultado en la base local
-    InsertarDatos(dbLocal , cursorLocal , resultado , scriptInsertar)
-    return resultado
+    # guardo el resultado en la base local en caso de que la tabla exista
+    accionExitosa = InsertarDatos(dbLocal , cursorLocal , resultado , scriptInsertar)
+    return resultado , accionExitosa
 
-def BorrarTabla(db , cursor , tabla):
-    print(f"{Fore.BLUE}{Style.BRIGHT}...borrando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
-    return True
+def BorrarTablaLocal(db , cursor , tabla):
+    accionExitosa = False
+    try:
+        print(f"{Fore.BLUE}{Style.BRIGHT}...borrando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
+        otroCursor , verificacionOK = VerificarTabla(db , tabla)
+        if verificacionOK == True:
+            queryTruncate = "TRUNCATE TABLE " + tabla
+            cursor.execute(queryTruncate)
+            db.commit()
+    except:
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> BorrarTablaLocal(db , cursor , tabla)) no se pudo ejecutar el script...{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
+        accionExitosa = True
+    return accionExitosa
 
-def CrearTabla(db , cursor , scriptCrear):
+def CrearTablaLocal(db , cursor , scriptCrear):
     print(f"{Fore.BLUE}{Style.BRIGHT}...creando tabla : en {db.database} ...{Style.RESET_ALL}")
     return True
 
-def EliminarTabla(db , cursor , tabla):
-    print(f"{Fore.BLUE}{Style.BRIGHT}...eliminando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
-    return True
+def EliminarTablaLocal(db , cursor , tabla):
+    accionExitosa = False
+    try:
+        print(f"{Fore.BLUE}{Style.BRIGHT}...eliminando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
+        queryTruncate = "DROP TABLE IF EXISTS" + tabla
+        cursor.execute(queryTruncate)
+        db.commit()
+    except:
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> EliminarTablaLocal(db , cursor , tabla)) no se pudo eliminar la tabla {tabla}...{Style.RESET_ALL}")    
+    else:
+        print(f"{Fore.GREEN}{Style.BRIGHT}...tabla ---> {tabla }eliminada de la base {db.database}  ...{Style.RESET_ALL}")
+        accionExitosa = True
+    return accionExitosa
 ##########################################################################################################
 #print(f"{Fore.GREEN} verde {Fore.RED} rojo {Style.BRIGHT} brillante {Style.RESET_ALL} resetear todo")
