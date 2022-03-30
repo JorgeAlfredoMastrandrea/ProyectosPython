@@ -344,6 +344,8 @@ crear_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """CREATE TABLE IF NOT EXISTS TAB
                                                  longitud FLOAT(45),
                                                  Curso VARCHAR(45),                                                 
                                                  División VARCHAR(45),
+                                                 Turno CHAR(25),
+                                                 Modalidad VARCHAR(45),
                                                  Matrícula INT(10),
                                                  Masculinos INT(10),
                                                  Femeninos INT(10),
@@ -391,4 +393,34 @@ seleccionar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """SELECT
                                                         tn.Curso,
                                                         tn.`División`,
                                                         tn.Alumno_ID
-                                                        )"""
+                                                        """
+
+insertar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """INSERT INTO TABLA_INSTITUCIONAL_POR_CURSO_DIVISION 
+                                                 (
+                                                 Nivel,
+                                                 Gestión,
+                                                 Supervisión,
+                                                 Escuela_ID,
+                                                 CUE,
+                                                 subcue,
+                                                 Número_escuela,
+                                                 Anexo,
+                                                 Número_Anexo,
+                                                 Nombre_Escuela,
+                                                 Departamento,
+                                                 Localidad,
+                                                 zona,
+                                                 AMBITO,
+                                                 Regional,
+                                                 latitud,
+                                                 longitud,
+                                                 Curso,
+                                                 División,
+                                                 Turno,
+                                                 Modalidad,
+                                                 Matrícula,
+                                                 Masculinos,
+                                                 Femeninos,
+                                                 NSNC
+                                ) 
+                                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""                                                        
