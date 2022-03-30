@@ -151,8 +151,9 @@ def InsertarDatos(db , cursor , resultado , scriptInsert):
         print(f"{Fore.BLUE}{Style.BRIGHT}...ejecutando script INSERT contra : {Style.RESET_ALL}", db.database)
         cursor.executemany(scriptInsert, resultado)
         db.commit()
-    except:
+    except:# ValueError as error:
         print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> InsertarDatos(db , cursor , resultado , scriptInsert)) no se pudo insertar los datos en base local...{Style.RESET_ALL}")    
+        #print(error)
     else:
         print(f"{Fore.GREEN}{Style.BRIGHT}...datos insertados en la base {db.database}  ...{Style.RESET_ALL}")    
         accionExitosa = True
@@ -174,7 +175,7 @@ def Leer(db , cursor , scriptSelect):
 
 def LeerYGuardarEnLocal(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
     # hago la consulta al gem
-    resultado = Leer(dbGEM , cursorGEM , scriptSelectGEM)
+    resultado , exito = Leer(dbGEM , cursorGEM , scriptSelectGEM)
     # guardo el resultado en la base local en caso de que la tabla exista
     accionExitosa = InsertarDatos(dbLocal , cursorLocal , resultado , scriptInsertar)
     return resultado , accionExitosa
@@ -182,16 +183,16 @@ def LeerYGuardarEnLocal(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLo
 def BorrarTablaLocal(db , cursor , tabla):
     accionExitosa = False
     try:
-        print(f"{Fore.BLUE}{Style.BRIGHT}...borrando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}...borrando datos de la tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
         otroCursor , verificacionOK = VerificarTabla(db , tabla)
         if verificacionOK == True:
             queryTruncate = "TRUNCATE TABLE " + tabla
             cursor.execute(queryTruncate)
             db.commit()
     except:
-        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> BorrarTablaLocal(db , cursor , tabla)) no se pudo ejecutar el script...{Style.RESET_ALL}")
+        print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> BorrarTablaLocal(db , cursor , tabla)) no se pudo borrar los datos de la tabla...{Style.RESET_ALL}")
     else:
-        print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}{Style.BRIGHT}...datos borrados de la tabla {tabla} de la base {db.database} ...{Style.RESET_ALL}")
         accionExitosa = True
     return accionExitosa
 
@@ -203,13 +204,15 @@ def EliminarTablaLocal(db , cursor , tabla):
     accionExitosa = False
     try:
         print(f"{Fore.BLUE}{Style.BRIGHT}...eliminando tabla : {tabla} en {db.database} ...{Style.RESET_ALL}")
-        queryTruncate = "DROP TABLE IF EXISTS" + tabla
-        cursor.execute(queryTruncate)
-        db.commit()
+        otroCursor , verificacionOK = VerificarTabla(db , tabla)
+        if verificacionOK == True:
+            queryTruncate = "DROP TABLE IF EXISTS " + tabla
+            cursor.execute(queryTruncate)
+            db.commit()
     except:
         print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> EliminarTablaLocal(db , cursor , tabla)) no se pudo eliminar la tabla {tabla}...{Style.RESET_ALL}")    
     else:
-        print(f"{Fore.GREEN}{Style.BRIGHT}...tabla ---> {tabla }eliminada de la base {db.database}  ...{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}{Style.BRIGHT}...tabla ---> {tabla } eliminada de la base {db.database}  ...{Style.RESET_ALL}")
         accionExitosa = True
     return accionExitosa
 ##########################################################################################################

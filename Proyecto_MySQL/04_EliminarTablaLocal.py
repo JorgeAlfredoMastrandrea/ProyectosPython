@@ -18,11 +18,7 @@ try :
 except :    
     print(f"{Fore.RED}{Style.BRIGHT}...ERROR en ProyectoMySQL_002.py ...{Style.RESET_ALL}")
 
-resultado , accionExitosa = LibDBManager2.LeerYGuardarEnLocal(LibConexiones.gem , 
-                                                cursorGEM , 
-                                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO , 
-                                                LibConexiones.dbejemplo , 
-                                                cursorDBEjemplo , 
-                                                QuerysMatricula.insertar_TABLA_INSTITUCIONAL_POR_CURSO)
-
-print("la accion de leer y guardar en local produjo un resultado : ",accionExitosa)
+accionExitosa = LibDBManager2.EliminarTablaLocal(LibConexiones.dbejemplo ,
+                                                 cursorDBEjemplo ,
+                                                 "tabla_institucional_por_curso")
+print("accion exitosa al borrar la tabla  ",accionExitosa)
