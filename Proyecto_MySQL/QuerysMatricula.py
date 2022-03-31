@@ -423,4 +423,96 @@ insertar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """INSERT INTO TABLA_INSTITUCI
                                                  Femeninos,
                                                  NSNC
                                 ) 
-                                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""                                                        
+                                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+leer_local_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION = """SELECT * 
+                                   FROM TABLA_INSTITUCIONAL_POR_CURSO_DIVISION
+                                   """
+###############################################################################################################
+###############################################################################################################
+
+crear_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO = """CREATE TABLE IF NOT EXISTS TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO                                                 
+                                                 (
+                                                 Nivel VARCHAR(50),
+                                                 Gestión VARCHAR(45),
+                                                 Supervisión VARCHAR(150),
+                                                 Escuela_ID INT(10),
+                                                 CUE INT(7),
+                                                 subcue INT(2),
+                                                 Número_escuela VARCHAR(6),
+                                                 Anexo INT(10),
+                                                 Número_Anexo VARCHAR(10),
+                                                 Nombre_Escuela VARCHAR(120),
+                                                 Departamento VARCHAR(45),
+                                                 Localidad VARCHAR(45),
+                                                 zona VARCHAR(20),
+                                                 AMBITO VARCHAR(60),
+                                                 Regional VARCHAR(45),
+                                                 latitud FLOAT(45),
+                                                 longitud FLOAT(45),
+                                                 Curso VARCHAR(45),
+                                                 Cant_divisiones_por_curso INT(10)                                                 
+                                                 )"""
+
+seleccionar_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO = """
+                                                 SELECT
+                                                 tn.Nivel,
+                                                 tn.`Gestión`,
+                                                 tn.`Supervisión`,
+                                                 tn.Escuela_ID,
+                                                 tn.CUE,
+                                                 tn.subcue,
+                                                 tn.`Número_escuela`,
+                                                 tn.Anexo,
+                                                 tn.`Número_Anexo`,
+                                                 tn.Nombre_Escuela,
+                                                 tn.Departamento,
+                                                 tn.Localidad,
+                                                 tn.zona,
+                                                 tn.AMBITO,
+                                                 tn.Regional,                                   
+                                                 tn.latitud,
+                                                 tn.longitud,                                                 
+                                                 tn.Curso,
+                                                 COUNT(DISTINCT(tn.División)) AS 'Cant_divisiones_por_curso'
+                                                 
+                                                 FROM (
+                                                               """ + seleccionar_TABLA_MATRICULA_NOMINAL + """              
+                                                        ) tn
+
+                                                 GROUP BY 
+                                                 tn.`Número_Anexo`,
+                                                 tn.Curso
+                                                 ORDER BY 
+                                                 tn.Nivel, 
+                                                 tn.`Gestión`, 
+                                                 tn.`Supervisión`,
+                                                 tn.`Número_Anexo`,
+                                                 tn.Curso,
+                                                 tn.`División`,
+                                                 tn.Alumno_ID
+                                                 """
+
+insertar_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO = """INSERT INTO TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO 
+                                                 (
+                                                 Nivel,
+                                                 Gestión,
+                                                 Supervisión,
+                                                 Escuela_ID,
+                                                 CUE,
+                                                 subcue,
+                                                 Número_escuela,
+                                                 Anexo,
+                                                 Número_Anexo,
+                                                 Nombre_Escuela,
+                                                 Departamento,
+                                                 Localidad,
+                                                 zona,
+                                                 AMBITO,
+                                                 Regional,
+                                                 latitud,
+                                                 longitud,
+                                                 Curso,
+                                                 Cant_divisiones_por_curso
+                                                 ) 
+                                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""

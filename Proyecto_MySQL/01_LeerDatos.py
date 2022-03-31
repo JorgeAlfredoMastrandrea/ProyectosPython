@@ -19,9 +19,9 @@ except :
     print(f"{Fore.RED}{Style.BRIGHT}...ERROR en ProyectoMySQL_002.py ...{Style.RESET_ALL}")
 
 
-resultados = LibDBManager2.Leer(LibConexiones.gem , 
+resultados,ok = LibDBManager2.Leer(LibConexiones.gem , 
                                 cursorGEM , 
-                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION)
+                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO)
 
 for registro in resultados:
     print(registro)

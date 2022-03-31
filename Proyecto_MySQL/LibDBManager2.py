@@ -171,12 +171,12 @@ def Leer(db , cursor , scriptSelect):
         print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> Leer(db , cursor , scriptSelect)) no se pudo ejecutar el script...{Style.RESET_ALL}")
     else:
         print(f"{Fore.GREEN}{Style.BRIGHT}...datos leidos de la base {db.database}  ...{Style.RESET_ALL}")
-        accionExitosa = True 
+        accionExitosa = True
     return resultado , accionExitosa
 
 def LeerYGuardarEnLocal(dbGEM , cursorGEM , scriptSelectGEM , dbLocal , cursorLocal , scriptInsertar):
     # hago la consulta al gem
-    resultado , exito = Leer(dbGEM , cursorGEM , scriptSelectGEM)
+    resultado , accionExitosa = Leer(dbGEM , cursorGEM , scriptSelectGEM)
     # guardo el resultado en la base local en caso de que la tabla exista
     accionExitosa = InsertarDatos(dbLocal , cursorLocal , resultado , scriptInsertar)
     return resultado , accionExitosa
@@ -207,7 +207,7 @@ def CrearTablaLocal(db , cursor , scriptCrear):
         print(f"{Fore.RED}{Style.BRIGHT}...ERROR en (LibDBManager2.py --> CrearTablaLocal(db , cursor , scriptCrear)) no se pudo crear la tabla en la base {db.database}...{Style.RESET_ALL}")    
     else:
         print(f"{Fore.GREEN}{Style.BRIGHT}...tabla creada en la base {db.database}  ...{Style.RESET_ALL}")
-        accionExitosa = True
+        accionExitosa = True     
     return accionExitosa
 
 def EliminarTablaLocal(db , cursor , tabla):

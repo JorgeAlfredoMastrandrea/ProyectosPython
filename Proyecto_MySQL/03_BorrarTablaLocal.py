@@ -20,5 +20,5 @@ except :
 
 accionExitosa = LibDBManager2.BorrarTablaLocal(LibConexiones.dbejemplo ,
                                                  cursorDBEjemplo ,
-                                                 "tabla_institucional_por_curso")
+                                                 "tabla_institucional_cantidad_de_divisiones_por_curso")
 print("accion exitosa al borrar la tabla  ",accionExitosa)

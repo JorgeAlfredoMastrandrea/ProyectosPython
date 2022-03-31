@@ -20,6 +20,6 @@ except :
 
 accionExitosa = LibDBManager2.CrearTablaLocal(LibConexiones.dbejemplo ,
                                               cursorDBEjemplo ,
-                                              QuerysMatricula.crear_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION)
+                                              QuerysMatricula.crear_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO)
 
 print("accion exitosa al crear la tabla  ",accionExitosa)

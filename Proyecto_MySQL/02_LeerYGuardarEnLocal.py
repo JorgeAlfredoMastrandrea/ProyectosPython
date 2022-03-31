@@ -20,9 +20,9 @@ except :
 
 resultado , accionExitosa = LibDBManager2.LeerYGuardarEnLocal(LibConexiones.gem , 
                                                 cursorGEM , 
-                                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION , 
+                                                QuerysMatricula.seleccionar_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO , 
                                                 LibConexiones.dbejemplo , 
                                                 cursorDBEjemplo , 
-                                                QuerysMatricula.insertar_TABLA_INSTITUCIONAL_POR_CURSO_DIVISION)
+                                                QuerysMatricula.insertar_TABLA_INSTITUCIONAL_CANTIDAD_DE_DIVISIONES_POR_CURSO)
 
 print("la accion de leer y guardar en local produjo un resultado : ",accionExitosa)
