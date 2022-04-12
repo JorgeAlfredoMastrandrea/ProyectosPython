@@ -1,0 +1,27 @@
+image(string file [, float x [, float y [, float w [, float h [, string type [, mixed link]]]]]])
+        
+        # file : Nombre del archivo que contiene la imagen.
+        
+        # float x : Abscisa de la esquina superior izquierda. Si no se especifica o es igual a null, se utilizará la abscisa actual.
+        
+        # float y : Ordenada de la esquina superior izquierda. Si no se especifica o es igual a null, se utilizará la ordenada actual, 
+        # demás, un salto de página es invocado primero si es necesario 
+        # (en caso de que esté habilitado el salto de página automático) y 
+        # después de la llamada, la ordenada actual se mueve a la parte inferior de la imagen.
+        
+        # float w : Ancho de la imagen en la página. Existen tres posibilidades:
+                    # Si el valor es positivo, éste será el ancho en la unidad de medida definida por el usuario.
+                    # Si el valor es negativo, el valor absoluto será la resolución horizontal en ppp.
+                    # Si no se especifica o es cero, se calcula automáticamente
+
+        # float h : Alto de la imagen en la página. Existen tres posibilidades:
+                    # Si el valor es positivo, éste será la altura en la unidad de medida definida por el usuario.
+                    # Si el valor es negativo, el valor absoluto será la resolución vertical en ppp.
+                    # Si no se especifica o es cero, se calcula automáticamente
+
+        # string type : Formato de la imagen. Los posibles valores son (indiferente a mayúsculas): JPG, JPEG, PNG y GIF. 
+        # Si no se especifica, el tipo se deduce de la extensión del fichero.            
+
+        # mixed link : URL o identificador devuelto por el método AddLink().
+
+-----------------------------------------------------------------------------------------------------------------------------
